@@ -1,8 +1,12 @@
 ---
-- name: Core package list
-  dnf: name={{item}} state=installed
-  with_items:
-    - git
-    - zsh
-    - tmux
-    - docker
+- name: Bootstrap my system!
+  hosts: localhost
+  user: root
+  tasks:
+  - name: Core package list
+    dnf: name={{item}} state=installed
+    with_items:
+      - git
+      - zsh
+      - tmux
+      - docker
