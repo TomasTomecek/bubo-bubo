@@ -1,0 +1,8 @@
+---
+- name: Core package list
+  dnf: name={{item}} state=installed
+  with_items:
+    - git
+    - zsh
+    - tmux
+    - docker
