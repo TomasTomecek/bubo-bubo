@@ -5,7 +5,8 @@ Description=Update dotfiles git repository
 ExecStart=/usr/bin/bash -c " \
     set -x ; \
     cd ~/.dotfiles && \
-    git pull --rebase"
+    git pull --rebase || \
+    git rebase --abort"
 
 [Install]
 WantedBy=multi-user.target
