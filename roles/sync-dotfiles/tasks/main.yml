@@ -1,0 +1,15 @@
+---
+- name: copy unit files
+  template:
+    src: sync-dotfiles.service
+    dest: ~/.config/systemd/user/
+- name: copy timer unit
+  template:
+    src: sync-dotfiles.timer
+    dest: ~/.config/systemd/user/
+- name: enable timer unit
+  systemd:
+    name: sync-dotfiles.timer
+    enabled: true
+    user: true
+    daemon_reload: yes

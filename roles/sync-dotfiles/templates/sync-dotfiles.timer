@@ -1,0 +1,8 @@
+[Unit]
+Description=Update git repository with dotfiles every day.
+
+[Timer]
+OnUnitActiveSec=1d
+
+[Install]
+WantedBy=timers.target

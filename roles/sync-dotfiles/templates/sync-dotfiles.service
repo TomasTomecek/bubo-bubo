@@ -1,0 +1,11 @@
+[Unit]
+Description=Update dotfiles git repository
+
+[Service]
+ExecStart=/usr/bin/bash -c " \
+    set -x ; \
+    cd ~/.dotfiles && \
+    git pull --rebase"
+
+[Install]
+WantedBy=multi-user.target
