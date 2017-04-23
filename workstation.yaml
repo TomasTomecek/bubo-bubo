@@ -2,3 +2,4 @@
 - hosts: localhost
   roles:
   - sync-dotfiles
+  - dev-env
