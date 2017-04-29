@@ -3,4 +3,4 @@
   get_url:
     url: https://github.com/TomasTomecek/pretty-git-prompt/releases/download/0.0.3/pretty-git-prompt-0.0.3-x86_64-unknown-linux-gnu
     dest: ~/.local/bin/pretty-git-prompt
-    mode: 0640
+    mode: 0511
