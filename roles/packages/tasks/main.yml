@@ -7,10 +7,12 @@
     # core terminal apps
     - zsh
     - tmux
+    - tmux-top
     - vim
     - stow
     - git
     - tig
+    - mc
     - autojump
     - mosh
     - htop
