@@ -1,0 +1,9 @@
+---
+- name: create my user
+  user:
+    name: tt
+    uid: 1000
+    group: tt
+    shell: /bin/zsh
+    createhome: yes
+    home: /home/tt
