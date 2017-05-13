@@ -1,0 +1,27 @@
+---
+- name: inspect ~/.dotfiles dir
+  stat:
+    path: ~/.dotfiles
+  register: dotfiles_path
+- name: clone repository with dotfiles
+  git:
+    repo: https://github.com/TomasTomecek/dotfiles
+    dest: ~/.dotfiles
+    track_submodules: yes
+    recursive: yes
+  when: not dotfiles_path.stat.isdir
+- name: create ~/.vim/bundle
+  file:
+    path: ~/.vim/bundle
+    state: directory
+    mode: 0755
+- name: clone vundle
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+- name: symlink dotfiles
+  command: stow tmux zsh vim git
+  args:
+    chdir: ~/.dotfiles
+- name: install vim plugins
+  command: vim +PluginInstall +qall
