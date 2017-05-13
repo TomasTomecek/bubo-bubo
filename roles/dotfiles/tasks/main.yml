@@ -9,7 +9,8 @@
     dest: ~/.dotfiles
     track_submodules: yes
     recursive: yes
-  when: not dotfiles_path.stat.isdir
+    accept_hostkey: yes
+  when: not dotfiles_path.stat.exists
 - name: create ~/.vim/bundle
   file:
     path: ~/.vim/bundle
