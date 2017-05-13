@@ -1,0 +1,19 @@
+---
+- name: install my core packages
+  dnf:
+    state: installed
+    name: '{{ item }}'
+  with_items:
+    # core terminal apps
+    - zsh
+    - tmux
+    - vim
+    - stow
+    - git
+    - tig
+    - autojump
+    - mosh
+    - htop
+    - sen
+    # core services
+    - docker
