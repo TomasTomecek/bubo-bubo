@@ -1,9 +1,15 @@
 ---
 - name: create my user
   user:
-    name: tt
+    name: tt  # XXX: hardcoded
     uid: 1000
-    group: tt
     shell: /bin/zsh
     createhome: yes
     home: /home/tt
+- name: ensure systemd user unit dir exists
+  file:
+    path: ~/.config/systemd/user/
+    state: directory
+    mode: 0755
+    owner: tt  # XXX: hardcoded
+    group: tt  # XXX: hardcoded
