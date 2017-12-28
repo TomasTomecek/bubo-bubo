@@ -2,6 +2,7 @@
 Description=Update git repository with dotfiles every day.
 
 [Timer]
+OnBootSec=1h
 OnUnitActiveSec=1d
 
 [Install]

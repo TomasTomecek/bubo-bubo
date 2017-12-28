@@ -3,10 +3,9 @@ Description=Update dotfiles git repository
 
 [Service]
 ExecStart=/usr/bin/bash -c " \
-    set -x ; \
+    set -ex ; \
     cd ~/.dotfiles && \
-    git pull --rebase || \
-    git rebase --abort"
+    git pull --rebase"
 
 [Install]
 WantedBy=multi-user.target
