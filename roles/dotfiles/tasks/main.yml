@@ -26,3 +26,5 @@
     chdir: ~/.dotfiles
 - name: install vim plugins
   command: vim +PluginInstall +qall
+# TODO: services role: open firewall 60001 port for mosh, change ssh port, disable root login
+# TodO: create private git repo at /home/tt
