@@ -1,3 +1,5 @@
+#!/bin/bash
+set -ex
 dnf install -y git ansible
 git clone https://github.com/TomasTomecek/bubo-bubo
 cd bubo-bubo
