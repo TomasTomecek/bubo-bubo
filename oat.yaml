@@ -1,5 +1,7 @@
+# TODO: run this playbook daily - s/sync-dotfiles/sync-configuration/
 ---
 - hosts: localhost
   roles:
   - secret
+  - sync-dotfiles
 
