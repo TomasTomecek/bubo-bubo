@@ -11,20 +11,10 @@
     recursive: yes
     accept_hostkey: yes
   when: not dotfiles_path.stat.exists
-- name: create ~/.vim/bundle
-  file:
-    path: ~/.vim/bundle
-    state: directory
-    mode: 0755
-- name: clone vundle
-  git:
-    repo: https://github.com/gmarik/Vundle.vim.git
-    dest: ~/.vim/bundle/Vundle.vim
+# TODO: use ansible instead of stow
 - name: symlink dotfiles
   command: stow tmux zsh vim git
   args:
     chdir: ~/.dotfiles
-- name: install vim plugins
-  command: vim +PluginInstall +qall
+# TODO: since I dont use vundle anymore, initiate vim
 # TODO: services role: open firewall 60001 port for mosh, change ssh port, disable root login
-# TodO: create private git repo at /home/tt
