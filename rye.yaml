@@ -2,5 +2,6 @@
 - hosts: localhost
   roles:
   - secret
+  - dotfiles
   - sync-dotfiles
 
