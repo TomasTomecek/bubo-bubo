@@ -24,6 +24,7 @@
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: ~/.vim/autoload/plug.vim
-- name: install vim plugins
-  command: vim +PlugInstall
+# TODO: run as headless
+# - name: install vim plugins
+#   command: vim +PlugInstall
 # TODO: services role: open firewall 60001 port for mosh, change ssh port, disable root login
