@@ -1,21 +1,128 @@
 ---
-- name: install my core packages
+- name: install core packages
   dnf:
     state: installed
     name: '{{ item }}'
   with_items:
-    # core terminal apps
-    - zsh
+    - NetworkManager-tui
+    - ansible
+    - at
+    - atomic
+    - autojump
+    - autojump-zsh
+    - cmake
+    - cockpit
+    - copr-cli
+    - cyrus-sasl-gssapi
+    - docker
+    - docker-compose
+    - docker-vim
+    - docker-zsh-completion
+    - fedora-packager
+    - fedpkg
+    - git
+    - glances
+    - gnupg
+    - htop
+    - iotop
+    - less
+    - lm_sensors
+    - lshw
+    - mc
+    - mosh
+    - powertop
+    - python2-docker
+    - python2-ipdb
+    - python3-PyGithub
+    - python3-docker
+    - python3-ipdb
+    - sen
+    - smartmontools
+    - stow
+    - strace
+    - sudo
+    - tig
     - tmux
     - tmux-top
+    - tree
     - vim
-    - stow
-    - git
-    - tig
-    - mc
-    - autojump
-    - mosh
-    - htop
-    - sen
-    # core services
-    - docker
+    - zsh
+  tags:
+    core
+- name: install workstation packages
+  dnf:
+    state: installed
+    name: '{{ item }}'
+  with_items:
+    - asciinema
+    - buildah
+    - byzanz
+    - cri-o
+    - distgen
+    - fedora-review
+    - fedrepo-req
+    - flatpak-builder
+    - golang-github-cpuguy83-go-md2man
+    - iwl7260-firmware
+    - origin
+    - pyp2rpm
+    - rebase-helper
+    - runc
+    - rust
+    - source-to-image
+    - tito
+  tags:
+    - workstation
+- name: install graphical packages
+  dnf:
+    state: installed
+    name: '{{ item }}'
+  with_items:
+    - NetworkManager-openvpn-gnome
+    - abattis-cantarell-fonts
+    - avidemux
+    - baobab
+    - clearlooks-phenix-gtk2-theme
+    - clearlooks-phenix-gtk3-theme
+    - clearlooks-phenix-xfwm4-theme
+    - darktable
+    - evince
+    - file-roller
+    - geeqie
+    - gimp
+    - google-droid-kufi-fonts-20120715-12.fc27.noarch
+    - google-droid-sans-fonts-20120715-12.fc27.noarch
+    - google-droid-sans-mono-fonts-20120715-12.fc27.noarch
+    - google-droid-serif-fonts-20120715-12.fc27.noarch
+    - google-roboto-fonts-2.138-1.fc28.noarch
+    - gparted
+    - gvfs-mtp
+    - levien-inconsolata-fonts
+    - mscore-fonts
+    - neovim
+    - obs-studio
+    # - openshot  # disappeared
+    - orage
+    - pavucontrol
+    - pycharm-community
+    - pycharm-community-plugins
+    - sxiv
+    - vagrant-libvirt
+    - vagrant-sshfs
+    - virt-manager
+    - wine
+    - wine-core
+    - wine-tahoma-fonts-system
+    - wine-times-new-roman-fonts-system
+    - wine-wingdings-fonts-system
+    - xclip
+    - xfce4-clipman-plugin
+    - xfce4-weather-plugin
+    - xfce4-xkb-plugin
+    - xorg-x11-drv-evdev
+    - xorg-x11-drv-fbdev
+    - xorg-x11-drv-libinput
+    - xorg-x11-drv-vesa
+    - xorg-x11-utils
+  tags:
+    - graphical

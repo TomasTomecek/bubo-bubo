@@ -2,6 +2,7 @@
 ---
 - hosts: localhost
   roles:
+  - { role: packages, tags: ['core', 'graphical', 'workstation'], become: true }
   - secret
   - sync-dotfiles
 
