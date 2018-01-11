@@ -1,8 +1,4 @@
 ---
-- name: inspect ~/.dotfiles dir
-  stat:
-    path: ~/.dotfiles
-  register: dotfiles_path
 - name: clone repository with dotfiles
   git:
     repo: https://github.com/TomasTomecek/dotfiles
@@ -10,7 +6,7 @@
     track_submodules: yes
     recursive: yes
     accept_hostkey: yes
-  when: not dotfiles_path.stat.exists
+    update: yes
 # TODO: use ansible instead of stow
 - name: symlink dotfiles
   command: stow tmux zsh vim git

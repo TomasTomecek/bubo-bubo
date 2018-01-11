@@ -1,8 +1,8 @@
 ---
-- name: pull dotfiles first
+- name: pull this repo; WTF, right?
   git:
-    repo: https://github.com/TomasTomecek/dotfiles
-    dest: ~/.dotfiles
+    dest: '{{ playbook_dir }}'
+    repo: https://github.com/TomasTomecek/bubo-bubo
     update: yes
 - name: copy unit files
   template:
