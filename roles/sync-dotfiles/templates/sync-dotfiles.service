@@ -2,7 +2,7 @@
 Description=Update dotfiles git repository
 
 [Service]
-ExecStart=/usr/bin/bash -c " \
+ExecStart=/bin/bash -c " \
     set -ex ; \
     cd ~/.dotfiles && \
     git pull --rebase"
