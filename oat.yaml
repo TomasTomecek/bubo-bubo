@@ -4,5 +4,10 @@
   roles:
   - { role: packages, tags: ['core', 'graphical', 'workstation'], become: true }
   - secret
-  - sync-dotfiles
+  - dotfiles
+  tasks:
+  - include_role:
+      name: sync-configuration
+    vars:
+      playbook: oat.yaml
 
