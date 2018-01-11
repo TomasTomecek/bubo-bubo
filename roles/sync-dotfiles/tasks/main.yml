@@ -13,3 +13,10 @@
     enabled: true
     user: true
     daemon_reload: yes
+- name: enable sync-dotfiles unit
+  systemd:
+    name: sync-dotfiles.service
+    enabled: true
+    state: started
+    user: true
+    daemon_reload: yes
