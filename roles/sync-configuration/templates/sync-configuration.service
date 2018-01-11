@@ -2,10 +2,8 @@
 Description=Update dotfiles git repository
 
 [Service]
-ExecStart=/bin/bash -c " \
-    set -ex ; \
-    cd ~/.dotfiles && \
-    git pull --rebase"
+ExecStart=/usr/bin/ansible-playbook {{ playbook }}
+WorkingDirectory={{ workdir | expanduser }}
 
 [Install]
 WantedBy=multi-user.target

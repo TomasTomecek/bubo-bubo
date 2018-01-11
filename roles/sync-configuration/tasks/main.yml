@@ -1,21 +1,26 @@
 ---
+- name: pull dotfiles first
+  git:
+    repo: https://github.com/TomasTomecek/dotfiles
+    dest: ~/.dotfiles
+    update: yes
 - name: copy unit files
   template:
-    src: sync-dotfiles.service
+    src: sync-configuration.service
     dest: ~/.config/systemd/user/
 - name: copy timer unit
   template:
-    src: sync-dotfiles.timer
+    src: sync-configuration.timer
     dest: ~/.config/systemd/user/
 - name: enable timer unit
   systemd:
-    name: sync-dotfiles.timer
+    name: sync-configuration.timer
     enabled: true
     user: true
     daemon_reload: yes
-- name: enable sync-dotfiles unit
+- name: enable sync-configuration unit
   systemd:
-    name: sync-dotfiles.service
+    name: sync-configuration.service
     enabled: true
     state: started
     user: true
