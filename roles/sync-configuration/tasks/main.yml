@@ -6,6 +6,8 @@
     update: yes
   register: command_result
   failed_when: "command_result.failed and 'Local modifications exist in repository' not in command_result.msg"
+  # - debug:
+  #     msg: '{{ command_result }}'
 - name: copy unit files
   template:
     src: sync-configuration.service
@@ -14,16 +16,17 @@
   template:
     src: sync-configuration.timer
     dest: ~/.config/systemd/user/
+- name: enable sync-configuration unit
+  systemd:
+    name: sync-configuration.service
+    enabled: true
+    state: reloaded
+    user: true
+    daemon_reload: yes
 - name: enable timer unit
   systemd:
     name: sync-configuration.timer
     enabled: true
     user: true
     daemon_reload: yes
-- name: enable sync-configuration unit
-  systemd:
-    name: sync-configuration.service
-    enabled: true
     state: started
-    user: true
-    daemon_reload: yes
