@@ -7,6 +7,10 @@
     recursive: yes
     accept_hostkey: yes
     update: yes
+  register: command_result
+  failed_when: "command_result.failed and 'Local modifications exist in repository' not in command_result.msg"
+# - debug:
+#     msg: '{{ command_result }}'
 # TODO: use ansible instead of stow
 - name: symlink dotfiles
   command: stow tmux zsh vim git

@@ -4,6 +4,8 @@
     dest: '{{ playbook_dir }}'
     repo: git@github.com:TomasTomecek/bubo-bubo
     update: yes
+  register: command_result
+  failed_when: "command_result.failed and 'Local modifications exist in repository' not in command_result.msg"
 - name: copy unit files
   template:
     src: sync-configuration.service
