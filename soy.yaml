@@ -8,5 +8,7 @@
   - include_role:
       name: sync-configuration
     vars:
-      make_target: oat
+      make_target: soy
+  - hostname:
+      name: soy
 
