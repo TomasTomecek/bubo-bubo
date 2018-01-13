@@ -2,7 +2,7 @@
 - name: pull this repo; WTF, right?
   git:
     dest: '{{ playbook_dir }}'
-    repo: https://github.com/TomasTomecek/bubo-bubo
+    repo: git@github.com:TomasTomecek/bubo-bubo
     update: yes
 - name: copy unit files
   template:

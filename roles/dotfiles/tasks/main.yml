@@ -1,7 +1,7 @@
 ---
 - name: clone repository with dotfiles
   git:
-    repo: https://github.com/TomasTomecek/dotfiles
+    repo: git@github.com:TomasTomecek/dotfiles
     dest: ~/.dotfiles
     track_submodules: yes
     recursive: yes
