@@ -13,7 +13,7 @@
 #     msg: '{{ command_result }}'
 # TODO: use ansible instead of stow
 - name: symlink dotfiles
-  command: stow tmux zsh vim git
+  command: stow tmux zsh vim git p-g-p
   args:
     chdir: ~/.dotfiles
 - name: create .vim/autoload dir
