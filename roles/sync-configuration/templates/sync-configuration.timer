@@ -1,5 +1,5 @@
 [Unit]
-Description=Update git repository with dotfiles every day.
+Description=Run the playbook every day.
 
 [Timer]
 OnBootSec=1h

@@ -7,5 +7,5 @@
   - include_role:
       name: sync-configuration
     vars:
-      playbook: rye.yaml
+      make_target: rye
 

@@ -1,8 +1,8 @@
 [Unit]
-Description=Update dotfiles git repository
+Description=Run Ansible playbook which controls the universe.
 
 [Service]
-ExecStart=/usr/bin/ansible-playbook {{ playbook }}
+ExecStart=/bin/make {{ make_target }}
 WorkingDirectory={{ workdir | expanduser }}
 
 [Install]

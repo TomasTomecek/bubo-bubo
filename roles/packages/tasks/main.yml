@@ -47,8 +47,6 @@
     - tree
     - vim
     - zsh
-  tags:
-    core
 - name: install workstation packages
   dnf:
     state: installed
