@@ -4,6 +4,7 @@
   - { role: packages, become: true }
   - secret
   - dotfiles
+  - { role: dev-env }
   tasks:
   - include_role:
       name: sync-configuration
