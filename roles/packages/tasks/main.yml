@@ -36,6 +36,7 @@
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
+    - rsync  
     - sen
     - smartmontools
     - stow
