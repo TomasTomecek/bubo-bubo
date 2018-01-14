@@ -32,7 +32,9 @@
     - mosh
     - powertop
     - python2-docker
+    - python2-firewall
     - python2-ipdb
+    - python2-policycoreutils
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
