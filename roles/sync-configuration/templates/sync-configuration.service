@@ -2,7 +2,7 @@
 Description=Run Ansible playbook which controls the universe.
 
 [Service]
-ExecStart=/bin/make {{ make_target }}
+ExecStart=/usr/bin/make {{ make_target }}
 WorkingDirectory={{ workdir | expanduser }}
 
 [Install]
