@@ -4,6 +4,9 @@
     dest: '{{ playbook_dir }}'
     repo: git@github.com:TomasTomecek/bubo-bubo
     update: yes
+    track_submodules: yes
+    recursive: yes
+    accept_hostkey: yes
   register: command_result
   failed_when: "command_result.failed and 'Local modifications exist in repository' not in command_result.msg"
   # - debug:
