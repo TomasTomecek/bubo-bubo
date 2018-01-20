@@ -23,6 +23,7 @@
     state: reloaded
     user: true
     daemon_reload: yes
+  ignore_errors: yes
 - name: enable timer unit
   systemd:
     name: sync-configuration.timer
@@ -30,3 +31,4 @@
     user: true
     daemon_reload: yes
     state: started
+  ignore_errors: yes
