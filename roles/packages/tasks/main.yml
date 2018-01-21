@@ -3,6 +3,7 @@
   dnf:
     state: installed
     name: '{{ item }}'
+  ignore_errors: yes  # FIXME F27 woraround
   with_items:
     - NetworkManager-tui
     - ansible
@@ -34,7 +35,8 @@
     - python2-docker
     - python2-firewall
     - python2-ipdb
-    - python2-policycoreutils
+    - python2-policycoreutils # > F27
+    - policycoreutils-python  # <= F27
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
