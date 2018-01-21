@@ -22,13 +22,11 @@
     enabled: true
     state: reloaded
     user: true
-    daemon_reload: yes
   ignore_errors: yes
 - name: enable timer unit
   systemd:
     name: sync-configuration.timer
     enabled: true
     user: true
-    daemon_reload: yes
     state: started
   ignore_errors: yes
