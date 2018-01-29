@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  roles:
+  - { role: packages, become: true }
+  - secret
+  - dotfiles
+    # - { role: dev-env }
+  tasks:
+  - include_role:
+      name: sync-configuration
+    vars:
+      make_target: jahoda
+

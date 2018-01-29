@@ -11,5 +11,8 @@ rye:
 soy:
 	ansible-playbook --skip-tags "graphical,workstation" ./soy.yaml
 
+jahoda:
+	ansible-playbook --skip-tags "graphical,workstation" ./jahoda.yaml
+
 test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh
