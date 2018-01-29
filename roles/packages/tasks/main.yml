@@ -3,7 +3,6 @@
   dnf:
     state: installed
     name: '{{ item }}'
-  ignore_errors: yes  # FIXME F27 woraround
   with_items:
     - NetworkManager-tui
     - ansible
@@ -35,8 +34,6 @@
     - python2-docker
     - python2-firewall
     - python2-ipdb
-    - python2-policycoreutils # > F27
-    - policycoreutils-python  # <= F27
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
@@ -52,6 +49,16 @@
     - tree
     - vim
     - zsh
+- name: install selinux python packages, workaround F27 rename
+  dnf:
+    state: installed
+    name: python2-policycoreutils  # > F27
+  ignore_errors: yes
+- name: install selinux python packages, workaround F27 rename
+  dnf:
+    state: installed
+    name: policycoreutils-python  # <= F27
+  ignore_errors: yes
 - name: install workstation packages
   dnf:
     state: installed
