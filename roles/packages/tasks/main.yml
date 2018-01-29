@@ -40,7 +40,7 @@
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
-    - rsync  
+    - rsync
     - sen
     - smartmontools
     - stow
