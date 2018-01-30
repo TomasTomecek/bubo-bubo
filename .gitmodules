@@ -4,4 +4,4 @@
 [submodule "roles/secret"]
 	path = roles/secret
 	url = ssh://jahoda/~/gitkwak/secret
-    branch = master
+	branch = master
