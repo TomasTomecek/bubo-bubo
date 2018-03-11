@@ -3,13 +3,13 @@
   file:
     state: directory
     path: ~/.local/bin
-# FIXME: if x86_64
 # TODO: download newer
 - name: download pretty-git-prompt binary
   get_url:
     url: https://github.com/TomasTomecek/pretty-git-prompt/releases/download/0.2.0/pretty-git-prompt-0.2.0-x86_64-unknown-linux-gnu
     dest: ~/.local/bin/pretty-git-prompt
     mode: 0511
+  when: ansible_os_family != "RedHat"
 # TODO: provide releases
 # - name: download tmux-top binary
 #   get_url:
