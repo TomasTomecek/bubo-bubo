@@ -101,11 +101,11 @@
     - file-roller
     - geeqie
     - gimp
-    - google-droid-kufi-fonts-20120715-12.fc27.noarch
-    - google-droid-sans-fonts-20120715-12.fc27.noarch
-    - google-droid-sans-mono-fonts-20120715-12.fc27.noarch
-    - google-droid-serif-fonts-20120715-12.fc27.noarch
-    - google-roboto-fonts-2.138-1.fc28.noarch
+    - google-droid-kufi-fonts
+    - google-droid-sans-fonts
+    - google-droid-sans-mono-fonts
+    - google-droid-serif-fonts
+    - google-roboto-fonts
     - gparted
     - gvfs-mtp
     - levien-inconsolata-fonts
@@ -121,8 +121,8 @@
     - vagrant-libvirt
     - vagrant-sshfs
     - virt-manager
-    - wine
-    - wine-core
+    # - wine
+    # - wine-core
     - wine-tahoma-fonts-system
     - wine-times-new-roman-fonts-system
     - wine-wingdings-fonts-system

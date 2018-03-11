@@ -3,7 +3,6 @@
   git:
     repo: git@github.com:TomasTomecek/dotfiles
     dest: ~/.dotfiles
-    track_submodules: yes
     recursive: yes
     accept_hostkey: yes
     update: yes
