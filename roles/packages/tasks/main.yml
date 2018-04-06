@@ -32,8 +32,7 @@
     - mosh
     - powertop
     - pretty-git-prompt
-    - python2-docker
-    - python2-firewall
+    - python3-firewall
     - python2-ipdb
     - python3-PyGithub
     - python3-docker
