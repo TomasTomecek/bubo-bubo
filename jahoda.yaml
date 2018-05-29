@@ -5,10 +5,12 @@
   - secret
   - dotfiles
     # - { role: dev-env }
-  - weechat-role
   tasks:
   - include_role:
       name: sync-configuration
     vars:
       make_target: jahoda
-
+  - include_role:
+      name: weechat-role
+    vars:
+      connect_to_server: redhat
