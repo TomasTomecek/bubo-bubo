@@ -1,6 +1,3 @@
-[submodule "ext/private"]
-	path = ext/private
-	url = ssh://jahoda/~/gitkwak/private
 [submodule "roles/secret"]
 	path = roles/secret
 	url = ssh://jahoda/~/gitkwak/secret
