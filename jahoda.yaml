@@ -5,6 +5,7 @@
   - secret
   - dotfiles
     # - { role: dev-env }
+  - weechat-role
   tasks:
   - include_role:
       name: sync-configuration
