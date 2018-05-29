@@ -2,3 +2,6 @@
 	path = roles/secret
 	url = ssh://jahoda/~/gitkwak/secret
 	branch = master
+[submodule "roles/weechat-role"]
+	path = roles/weechat-role
+	url = ssh://jahoda/~/gitkwak/weechat-role
