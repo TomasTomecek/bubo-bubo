@@ -1,6 +1,6 @@
 .PHONY: test
 
-IMAGE_NAME := registry.fedoraproject.org/fedora:27
+IMAGE_NAME := registry.fedoraproject.org/fedora:28
 
 oat:
 	ansible-playbook ./oat.yaml
