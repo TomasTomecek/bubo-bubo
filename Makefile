@@ -18,6 +18,6 @@ test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh
 
 check-bootstrap:
-	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) bash -c ' \
+	docker run --rm -it -v ${PWD}:/src:Z -w /src $(IMAGE_NAME) bash -c ' \
 		dnf install -y ansible git && \
 		ansible-playbook -vv ./playbook.yaml'
