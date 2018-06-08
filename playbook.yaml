@@ -1,0 +1,8 @@
+# this is the most common set up for all of my systems
+---
+- name: Bootstrap this system
+  hosts: localhost
+  roles:
+  - { role: packages, become: true }
+  - secret
+  - dotfiles
