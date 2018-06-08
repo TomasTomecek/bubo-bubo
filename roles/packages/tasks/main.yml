@@ -71,7 +71,6 @@
     - cri-o
     - distgen
     - fedora-review
-    - fedrepo-req
     - flatpak-builder
     - golang-github-cpuguy83-go-md2man
     - iwl7260-firmware
