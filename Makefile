@@ -6,7 +6,7 @@ oat:
 	ansible-playbook ./oat.yaml
 
 rye:
-	ansible-playbook ./rye.yaml
+	ansible-playbook --ask-become-pass ./rye.yaml
 
 soy:
 	ansible-playbook --skip-tags "graphical,workstation" ./soy.yaml
