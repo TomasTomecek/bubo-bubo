@@ -5,6 +5,7 @@
   - secret
   - dotfiles
   - { role: dev-env }
+  - desktop
   tasks:
   - include_role:
       name: sync-configuration

@@ -1,0 +1,4 @@
+---
+tasks:
+- name: XFCE <super>-L shortcut
+  command: xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Super>l' -s '/usr/bin/xfce4-popup-clipman'
