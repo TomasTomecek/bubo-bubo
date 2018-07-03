@@ -1,7 +1,7 @@
 [submodule "roles/secret"]
 	path = roles/secret
-	url = ssh://jahoda/~/gitkwak/secret
+	url = ssh://soy/~/gitkwak/secret
 	branch = master
 [submodule "roles/weechat-role"]
 	path = roles/weechat-role
-	url = ssh://jahoda/~/gitkwak/weechat-role
+	url = ssh://soy/~/gitkwak/weechat-role
