@@ -16,6 +16,7 @@
   template:
     src: sync-configuration.timer
     dest: ~/.config/systemd/user/
+# TODO: make 'user' configurable
 - name: enable sync-configuration unit
   systemd:
     name: sync-configuration.service
