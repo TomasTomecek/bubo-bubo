@@ -6,6 +6,9 @@ A_P := ansible-playbook --vault-password-file roles/secret/files/ans-vault.txt
 oat:
 	$(A_P) ./oat.yaml
 
+hops:
+	ansible-playbook ./hops.yaml
+
 rye:
 	$(A_P) ./rye.yaml
 
