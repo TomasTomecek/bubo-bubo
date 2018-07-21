@@ -6,6 +6,7 @@
   - { role: packages, become: true }
   - secret
   - dotfiles
+  - common
   - { role: dev-env }
   - desktop
   tasks:

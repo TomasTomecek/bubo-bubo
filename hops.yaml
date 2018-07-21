@@ -5,6 +5,7 @@
   - dotfiles
   - { role: dev-env }
   - desktop
+  - common
   tasks:
   - include_role:
       name: sync-configuration

@@ -1,0 +1,11 @@
+---
+- name: Start and enable timesyncd.
+  systemd:
+    name: systemd-timesyncd
+    state: started
+    enabled: true
+  become: true
+- name: Set timezone to Bratislava.
+  command: timedatectl set-timezone Europe/Bratislava
+  become: true
+
