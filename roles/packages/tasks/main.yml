@@ -33,7 +33,6 @@
     - powertop
     - pretty-git-prompt
     - python3-firewall
-    - python2-ipdb
     - python3-PyGithub
     - python3-docker
     - python3-ipdb
