@@ -49,6 +49,7 @@
     - tree
     - vim
     - zsh
+  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
 - name: install selinux python packages, workaround F27 rename
   dnf:
     state: installed
@@ -82,6 +83,7 @@
     - tito
   tags:
     - workstation
+  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
 - name: install graphical packages
   dnf:
     state: installed
@@ -135,3 +137,4 @@
     - xorg-x11-utils
   tags:
     - graphical
+  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
