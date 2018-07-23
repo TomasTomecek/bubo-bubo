@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars_files:
+  - roles/secret/files/gruyere
   roles:
   - secret
   - dotfiles

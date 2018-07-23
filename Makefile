@@ -1,18 +1,19 @@
 .PHONY: test
 
 IMAGE_NAME := registry.fedoraproject.org/fedora:28
+A_P := ansible-playbook --vault-password-file roles/secret/files/ans-vault.txt
 
 oat:
-	ansible-playbook ./oat.yaml
+	$(A_P) ./oat.yaml
 
 rye:
-	ansible-playbook --ask-become-pass ./rye.yaml
+	$(A_P) ./rye.yaml
 
 soy:
-	ansible-playbook --skip-tags "graphical,workstation" ./soy.yaml
+	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
 
 jahoda:
-	ansible-playbook --skip-tags "graphical,workstation" ./jahoda.yaml
+	$(A_P) "graphical,workstation" ./jahoda.yaml
 
 test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh
