@@ -7,7 +7,7 @@ oat:
 	$(A_P) ./oat.yaml
 
 hops:
-	ansible-playbook ./hops.yaml
+	$(A_P) ./hops.yaml
 
 rye:
 	$(A_P) ./rye.yaml
@@ -16,7 +16,7 @@ soy:
 	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
 
 jahoda:
-	$(A_P) "graphical,workstation" ./jahoda.yaml
+	$(A_P) --skip-tags "graphical,workstation" ./jahoda.yaml
 
 test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh

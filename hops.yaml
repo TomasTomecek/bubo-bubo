@@ -1,11 +1,13 @@
 ---
 - hosts: localhost
+  vars_files:
+  - roles/secret/files/gruyere
   roles:
-  # - secret
+  - secret
   - dotfiles
+  - common
   - { role: dev-env }
   - desktop
-  - common
   tasks:
   - include_role:
       name: sync-configuration
