@@ -2,6 +2,7 @@
 - hosts: localhost
   vars_files:
   - roles/secret/files/gruyere
+  - roles/secret/files/bat
   roles:
   - { role: packages, become: true }
   - secret
@@ -11,7 +12,8 @@
   - desktop
   tasks:
   - include_role:
+      name: redhat-internal-ansible-role
+  - include_role:
       name: sync-configuration
     vars:
       make_target: oat
-
