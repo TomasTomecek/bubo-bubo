@@ -2,7 +2,9 @@
 - hosts: localhost
   vars_files:
   - roles/secret/files/gruyere
+  - roles/secret/files/bat
   roles:
+  - { role: packages, become: true }
   - secret
   - dotfiles
   - common

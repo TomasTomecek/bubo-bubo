@@ -5,6 +5,8 @@
     state: started
     enabled: true
   become: true
+  # FIXME: fails on F28
+  ignore_errors: yes
 - name: Set timezone to Bratislava.
   command: timedatectl set-timezone Europe/Bratislava
   become: true

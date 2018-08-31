@@ -49,7 +49,6 @@
     - tree
     - vim
     - zsh
-  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
 - name: install selinux python packages, workaround F27 rename
   dnf:
     state: installed
@@ -80,10 +79,21 @@
     - runc
     - rust
     - source-to-image
-    - tito
   tags:
     - workstation
-  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
+- name: enable Petove pycharm copr repo
+  command: dnf copr enable -y phracek/PyCharm
+  args:
+    warn: false
+
+- name: install rpm fusion
+  dnf:
+    state: installed
+    name: '{{ item }}'
+  with_items:
+    - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
+    - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+
 - name: install graphical packages
   dnf:
     state: installed
@@ -91,16 +101,16 @@
   with_items:
     - NetworkManager-openvpn-gnome
     - abattis-cantarell-fonts
-    - avidemux
+      # - avidemux
     - baobab
     - clearlooks-phenix-gtk2-theme
     - clearlooks-phenix-gtk3-theme
     - clearlooks-phenix-xfwm4-theme
-    - darktable
+      # - darktable
     - evince
     - file-roller
     - geeqie
-    - gimp
+    # - gimp  # use flatpak instead
     - google-droid-kufi-fonts
     - google-droid-sans-fonts
     - google-droid-sans-mono-fonts
@@ -109,10 +119,10 @@
     - gparted
     - gvfs-mtp
     - levien-inconsolata-fonts
-    - mscore-fonts
+      # - mscore-fonts
     - neovim
-    - obs-studio
-    # - openshot  # disappeared
+    - nextcloud-client
+    # - obs-studio
     - orage
     - pavucontrol
     - pycharm-community
@@ -137,4 +147,3 @@
     - xorg-x11-utils
   tags:
     - graphical
-  when: "'oat' in inventory_hostname"  # is failing right now b/c of broken rawhide
