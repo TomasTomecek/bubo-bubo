@@ -9,8 +9,10 @@
   - dotfiles
   - common
   - { role: dev-env }
-  - desktop
   tasks:
+  - include_role:
+      name: desktop
+    when: ansible_user != root
   - include_role:
       name: redhat-internal-ansible-role
   - include_role:
