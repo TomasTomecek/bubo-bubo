@@ -12,6 +12,8 @@
   - desktop
   tasks:
   - include_role:
+      name: redhat-internal-ansible-role
+  - include_role:
       name: sync-configuration
     vars:
       make_target: hops
