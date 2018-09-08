@@ -147,3 +147,11 @@
     - xorg-x11-utils
   tags:
     - graphical
+- name: enable flathub
+  command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+- name: install flatpaks
+  command: flatpak install -y {{ item }}
+  with_items:
+  - flathub org.videolan.VLC
+  tags:
+    - graphical
