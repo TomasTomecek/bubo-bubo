@@ -149,6 +149,8 @@
     - graphical
 - name: enable flathub
   command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  tags:
+    - graphical
 - name: install flatpaks
   command: flatpak install -y {{ item }}
   with_items:
