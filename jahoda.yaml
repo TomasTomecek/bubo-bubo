@@ -7,7 +7,6 @@
   - secret
   - dotfiles
   - common
-    # - { role: dev-env }
   tasks:
   - include_role:
       name: sync-configuration
