@@ -16,7 +16,7 @@
   template:
     src: sync-configuration.timer
     dest: ~/.config/systemd/user/
-# TODO: make 'user' configurable
+# TODO: make 'user' configurable - this role should work with root
 - name: enable sync-configuration unit
   systemd:
     name: sync-configuration.service
