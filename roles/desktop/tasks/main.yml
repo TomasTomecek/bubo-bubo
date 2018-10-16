@@ -5,3 +5,5 @@
   command: xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Super>x' -n -t string --set 'xrandr --auto'
 - name: XFCE <super>-t shortcut
   command: xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Super>t' -n -t string --set 'xfce4-terminal --maximize --hide-toolbar --hide-borders --hide-menubar'
+- name: XFCE ctrl+alt+l shortcut
+  command: xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Control><Alt>L' -n -t string --set 'xscreensaver-command -activate'
