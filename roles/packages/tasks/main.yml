@@ -133,9 +133,9 @@
     - virt-manager
     # - wine
     # - wine-core
-    - wine-tahoma-fonts-system
-    - wine-times-new-roman-fonts-system
-    - wine-wingdings-fonts-system
+    # - wine-tahoma-fonts-system
+    # - wine-times-new-roman-fonts-system
+    # - wine-wingdings-fonts-system
     - xclip
     - xfce4-clipman-plugin
     - xfce4-weather-plugin
