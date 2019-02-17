@@ -1,9 +1,8 @@
 ---
 - name: install core packages
   dnf:
-    state: installed
-    name: '{{ item }}'
-  with_items:
+    state: latest
+    name:
     - NetworkManager-tui
     - ansible
     - at
@@ -37,6 +36,7 @@
     - python3-docker
     - python3-ipdb
     - python3-tabulate
+    - python3-policycoreutils
     - rsync
     - sen
     - smartmontools
@@ -49,21 +49,10 @@
     - tree
     - vim
     - zsh
-- name: install selinux python packages, workaround F27 rename
-  dnf:
-    state: installed
-    name: python2-policycoreutils  # > F27
-  ignore_errors: yes
-- name: install selinux python packages, workaround F27 rename
-  dnf:
-    state: installed
-    name: policycoreutils-python  # <= F27
-  ignore_errors: yes
 - name: install workstation packages
   dnf:
-    state: installed
-    name: '{{ item }}'
-  with_items:
+    state: latest
+    name:
     - asciinema
     - buildah
     - byzanz
@@ -88,17 +77,15 @@
 
 - name: install rpm fusion
   dnf:
-    state: installed
-    name: '{{ item }}'
-  with_items:
+    state: present
+    name:
     - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
     - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
 
 - name: install graphical packages
   dnf:
-    state: installed
-    name: '{{ item }}'
-  with_items:
+    state: latest
+    name:
     - NetworkManager-openvpn-gnome
     - abattis-cantarell-fonts
       # - avidemux
