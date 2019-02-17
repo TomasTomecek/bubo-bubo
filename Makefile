@@ -1,7 +1,7 @@
 .PHONY: test
 
 IMAGE_NAME := registry.fedoraproject.org/fedora:28
-A_P := ansible-playbook --vault-password-file roles/secret/files/ans-vault.txt
+A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vault-password-file roles/secret/files/ans-vault.txt
 
 oat:
 	$(A_P) ./oat.yaml
