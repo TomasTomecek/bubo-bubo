@@ -144,3 +144,7 @@
   - flathub org.videolan.VLC
   tags:
     - graphical
+- name: update flatpaks
+  command: flatpak update -y
+  tags:
+    - graphical
