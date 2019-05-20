@@ -125,6 +125,7 @@
     # - wine-wingdings-fonts-system
     - xclip
     - xfce4-clipman-plugin
+    - xfce4-cpugraph-plugin
     - xfce4-weather-plugin
     - xfce4-xkb-plugin
     - xorg-x11-drv-evdev
