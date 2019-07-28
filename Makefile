@@ -6,6 +6,9 @@ A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vaul
 oat:
 	$(A_P) ./oat.yaml
 
+cacao:
+	$(A_P) ./cacao.yaml
+
 hops:
 	$(A_P) ./hops.yaml
 
