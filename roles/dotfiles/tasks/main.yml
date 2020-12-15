@@ -16,6 +16,15 @@
   file:
     dest: ~/.config/nvim/
     state: directory
+- name: create dir for mc
+  file:
+    dest: ~/.config/mc/
+    state: directory
+- name: symlink mc.keymap
+  file:
+    state: link
+    dest: ~/.config/mc/mc.keymap
+    src: ~/.dotfiles/mc/mc.keymap
 - name: prep for nvim
   copy:
     dest: ~/.config/nvim/init.vim
