@@ -71,6 +71,8 @@
   command: dnf copr enable -y phracek/PyCharm
   args:
     warn: false
+  tags:
+    - workstation
 
 - name: install rpm fusion
   dnf:
@@ -78,6 +80,8 @@
     name:
     - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
     - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+  tags:
+    - workstation
 
 - name: install graphical packages
   dnf:
