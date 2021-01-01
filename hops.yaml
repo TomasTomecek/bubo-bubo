@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars:
+    target: hops
   vars_files:
   - roles/secret/files/gruyere
   - roles/secret/files/bat
@@ -17,6 +19,4 @@
       name: redhat-internal-ansible-role
   - include_role:
       name: sync-configuration
-    vars:
-      make_target: hops
 
