@@ -11,4 +11,5 @@
 - name: set hostname to {{ target }}
   hostname:
     name: '{{ target }}'
+  become: true
 
