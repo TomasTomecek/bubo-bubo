@@ -12,4 +12,8 @@
   hostname:
     name: '{{ target }}'
   become: true
-
+- name: Disable PC Speaker - the loud beeping PITA
+  file:
+    content: "blacklist pcspkr\n"
+    dest: /etc/modprobe.d/pcspkr-blacklist.conf
+  become: true
