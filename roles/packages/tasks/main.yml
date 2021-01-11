@@ -49,18 +49,10 @@
     - asciinema
     - buildah
     - byzanz
-    - cri-o
-    - distgen
     - fedora-review
-    - flatpak-builder
-    - golang-github-cpuguy83-go-md2man
     - iwl7260-firmware
     - origin
-    - pyp2rpm
     - rebase-helper
-    - runc
-    - rust
-    - source-to-image
   tags:
     - workstation
 - name: enable Petove pycharm copr repo
@@ -95,7 +87,6 @@
     - file-roller
     - geeqie
     # - gimp  # use flatpak instead
-    - google-droid-kufi-fonts
     - google-droid-sans-fonts
     - google-droid-sans-mono-fonts
     - google-droid-serif-fonts
