@@ -8,7 +8,8 @@
 - name: XFCE ctrl+alt+l shortcut
   command: xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Control><Alt>L' -n -t string --set 'xscreensaver-command -activate'
 - name: Put google-chrome repo in /etc/yum.repos.d
-  file:
+  copy:
     src: google-chrome.repo
     dest: /etc/yum.repos.d/google-chrome.repo
+    mode: '0644'
   become: true
