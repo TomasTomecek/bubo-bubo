@@ -15,6 +15,10 @@ hops:
 rye:
 	$(A_P) ./rye.yaml
 
+cashew:
+	# FIXME: create a password file here
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./cashew.yaml
+
 soy:
 	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
 
