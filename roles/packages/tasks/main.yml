@@ -43,6 +43,13 @@
     - vim
     - zsh
 
+- name: enable copr repos
+  tags:
+    - workstation
+  command: dnf copr enable -y {{ item }}
+  with_items:
+  - peterwu/iosevka
+
 - name: install rpm fusion
   dnf:
     state: present
@@ -57,60 +64,44 @@
   dnf:
     state: latest
     name:
-    - NetworkManager-openvpn-gnome
     - abattis-cantarell-fonts
-    - baobab
-    - clearlooks-phenix-gtk2-theme
-    - clearlooks-phenix-gtk3-theme
-    - clearlooks-phenix-xfwm4-theme
+    - iosevka-fonts  # in a copr repo
     - evince
-    - file-roller
     - geeqie
     - google-droid-sans-fonts
     - google-droid-sans-mono-fonts
     - google-droid-serif-fonts
     - google-roboto-fonts
-    - gparted
     - gvfs-mtp
     - levien-inconsolata-fonts
-      # - mscore-fonts
     - neovim
     - nextcloud-client
-    # - obs-studio
-    - pavucontrol
     - pycharm-community
     - pycharm-community-plugins
-    - sxiv
-    - vagrant-libvirt
-    - vagrant-sshfs
-    - virt-manager
-    # - wine
-    # - wine-core
-    # - wine-tahoma-fonts-system
-    # - wine-times-new-roman-fonts-system
-    # - wine-wingdings-fonts-system
     - xclip
-    - xfce4-clipman-plugin
-    - xfce4-cpugraph-plugin
-    - xfce4-weather-plugin
-    - xfce4-xkb-plugin
-    - xorg-x11-drv-evdev
-    - xorg-x11-drv-fbdev
-    - xorg-x11-drv-libinput
-    - xorg-x11-drv-vesa
-    - xrandr
   tags:
-    - graphical
+    - workstation
+
 - name: enable flathub
   command: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   tags:
     - graphical
+
 - name: install flatpaks
   command: flatpak install -y {{ item }}
   with_items:
   - flathub org.videolan.VLC
+  - flathub com.obsproject.Studio
+  - flathub com.slack.Slack
+  - flathub com.spotify.Client
+  - flathub im.riot.Riot
+  - flathub org.gimp.GIMP
+  - flathub org.kde.kdenlive
+  - flathub org.libreoffice.LibreOffice
+  - flathub org.videolan.VLC
   tags:
     - graphical
+
 - name: update flatpaks
   command: flatpak update -y
   tags:
