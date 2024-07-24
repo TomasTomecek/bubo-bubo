@@ -1,6 +1,6 @@
 .PHONY: test
 
-IMAGE_NAME := registry.fedoraproject.org/fedora:28
+IMAGE_NAME := registry.fedoraproject.org/fedora:40
 A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vault-password-file roles/secret/files/ans-vault.txt
 
 oat:
@@ -14,6 +14,9 @@ hops:
 
 rye:
 	$(A_P) ./rye.yaml
+
+melon:
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./melon.yaml
 
 cashew:
 	# FIXME: create a password file here
