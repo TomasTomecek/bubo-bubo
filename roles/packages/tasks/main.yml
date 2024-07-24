@@ -50,6 +50,13 @@
   with_items:
   - peterwu/iosevka
 
+- name: add google-chrome repo
+  tags:
+    - workstation
+  copy:
+    src: '{{ role_path }}/files/google-chrome.repo'
+    dest: /etc/yum.repos.d/google-chrome.repo
+
 - name: install rpm fusion
   dnf:
     state: present
@@ -79,6 +86,7 @@
     - pycharm-community
     - pycharm-community-plugins
     - xclip
+    - google-chrome-stable
   tags:
     - workstation
 
