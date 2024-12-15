@@ -18,6 +18,9 @@ soy:
 jahoda:
 	$(A_P) --skip-tags "graphical,workstation" ./jahoda.yaml
 
+batatas:
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./batatas.yaml
+
 test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh
 
