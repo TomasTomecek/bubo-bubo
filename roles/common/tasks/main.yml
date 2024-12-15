@@ -1,7 +1,7 @@
 ---
-- name: Start and enable timesyncd.
+- name: Start and enable chronyd
   systemd:
-    name: systemd-timesyncd
+    name: chronyd
     state: started
     enabled: true
   become: true
