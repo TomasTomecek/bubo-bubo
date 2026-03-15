@@ -9,7 +9,7 @@
   ignore_errors: yes
 # TODO: use ansible instead of stow
 - name: symlink dotfiles
-  command: stow tmux zsh vim git p-g-p
+  command: stow tmux zsh vim git p-g-p alacritty
   args:
     chdir: ~/.dotfiles
 - name: create dir for nvim
@@ -20,11 +20,15 @@
   file:
     dest: ~/.config/mc/
     state: directory
-- name: symlink mc.keymap
+- name: symlink mc configs
   file:
     state: link
-    dest: ~/.config/mc/mc.keymap
-    src: ~/.dotfiles/mc/mc.keymap
+    dest: ~/.config/mc/{{ item }}
+    src: ~/.dotfiles/mc/{{ item }}
+  loop:
+    - mc.keymap
+    - ini
+    - panels.ini
 - name: prep for nvim
   copy:
     dest: ~/.config/nvim/init.vim
