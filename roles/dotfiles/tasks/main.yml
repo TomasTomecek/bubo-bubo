@@ -29,20 +29,22 @@
     - mc.keymap
     - ini
     - panels.ini
-- name: prep for nvim
-  copy:
-    dest: ~/.config/nvim/init.vim
-    content: |
-          set runtimepath^=~/.vim runtimepath+=~/.vim/after
-          let &packpath = &runtimepath
-          source ~/.vimrc
-- name: create dirs in .vim
+- name: create dirs for .vim and nvim
   file:
     dest: '{{ item }}'
     state: directory
   with_items:
   - ~/.vim/autoload
   - ~/.vim/indent
+  - ~/.config/nvim
+- name: set up nvim
+  file:
+    state: link
+    dest: ~/.config/nvim/{{ item }}
+    src: ~/.dotfiles/nvim/{{ item }}
+  loop:
+  - init.lua
+  - lua
 - name: 'vim: copy indent file for yaml'
   copy:
     src: yaml.vim
