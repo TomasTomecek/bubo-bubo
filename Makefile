@@ -18,6 +18,9 @@ rye:
 melon:
 	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./melon.yaml
 
+haskap:
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./haskap.yaml
+
 cashew:
 	# FIXME: create a password file here
 	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./cashew.yaml

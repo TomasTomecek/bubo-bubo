@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  vars:
+    target: haskap
+  roles:
+  - { role: packages, become: true }
+  # - secret                            # dropped: private submodule on soy, unreachable from this
+                                         # machine by design; CSB now covers what
+                                         # redhat-internal-ansible-role used to configure
+  - dotfiles
+  - common
+  tasks:
+  # - include_role:
+  #     name: desktop
+  #   when: ansible_user_id != 'root'
+  # ^ assumption: desktop role is XFCE-specific, this box is GNOME. Confirm before phase 2.
+  # - include_role:
+  #     name: redhat-internal-ansible-role
+  # ^ dropped: CSB now handles this
+  # - include_role:
+  #     name: sync-configuration
+  # ^ deferred to phase 2: hardcoded workdir path + systemd WantedBy bug
