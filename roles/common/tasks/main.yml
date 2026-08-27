@@ -6,7 +6,8 @@
     enabled: true
   become: true
 - name: Set timezone to Bratislava.
-  command: timedatectl set-timezone Europe/Bratislava
+  ansible.builtin.timezone:
+    name: Europe/Bratislava
   become: true
 - name: set hostname to {{ target }}
   hostname:
