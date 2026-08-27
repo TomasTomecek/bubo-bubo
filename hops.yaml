@@ -13,9 +13,6 @@
   - { role: dev-env }
   tasks:
   - include_role:
-      name: desktop
-    when: ansible_user_id != 'root'
-  - include_role:
       name: redhat-internal-ansible-role
   - include_role:
       name: sync-configuration

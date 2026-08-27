@@ -10,10 +10,7 @@
   - dotfiles
   - common
   tasks:
-  # - include_role:
-  #     name: desktop
-  #   when: ansible_user_id != 'root'
-  # ^ assumption: desktop role is XFCE-specific, this box is GNOME. Confirm before phase 2.
+  # desktop role deleted in phase 2 (XFCE-specific, unused on GNOME)
   # - include_role:
   #     name: redhat-internal-ansible-role
   # ^ dropped: CSB now handles this

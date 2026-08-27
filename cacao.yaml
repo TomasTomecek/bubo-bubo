@@ -11,9 +11,6 @@
   - common
   tasks:
   - include_role:
-      name: desktop
-    when: ansible_user_id != 'root'
-  - include_role:
       name: sync-configuration
     vars:
       make_target: cacao
