@@ -1,1 +1,1 @@
-workdir: ~/g/bubo-bubo/
+workdir: '{{ playbook_dir }}'
