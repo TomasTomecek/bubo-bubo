@@ -2,6 +2,9 @@
 - hosts: localhost
   vars:
     target: haskap
+    git_template:
+      signed_off_by: "Tomas Tomecek <ttomecek@redhat.com>"
+      assisted_by: "Claude"
   roles:
   - { role: packages, become: true }
   # - secret                            # dropped: private submodule on soy, unreachable from this

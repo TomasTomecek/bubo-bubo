@@ -12,6 +12,11 @@
   command: stow tmux zsh vim git p-g-p alacritty
   args:
     chdir: ~/.dotfiles
+- name: generate git commit template for hosts that differ from the dotfiles default
+  template:
+    src: git-template
+    dest: ~/.dotfiles/git/.git-template
+  when: git_template is defined
 - name: create dir for nvim
   file:
     dest: ~/.config/nvim/

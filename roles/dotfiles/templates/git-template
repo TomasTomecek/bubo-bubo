@@ -1,0 +1,4 @@
+
+
+Signed-off-by: {{ git_template.signed_off_by }}
+Assisted-by: {{ git_template.assisted_by }}
