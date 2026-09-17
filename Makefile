@@ -12,6 +12,9 @@ melon:
 haskap:
 	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./haskap.yaml
 
+plum:
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./plum.yaml
+
 soy:
 	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
 

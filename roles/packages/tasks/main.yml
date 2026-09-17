@@ -4,10 +4,9 @@
     state: latest
     name:
     - NetworkManager-tui
-    - ansible
+    - ansible-core
     - autojump
     - autojump-zsh
-    - copr-cli
     - fedora-packager
     - fedpkg
     - git-core
@@ -22,14 +21,14 @@
     - python3-PyGithub
     - python3-tabulate
     - rsync
-    - sen
+    # - sen  # not in EPEL
     - smartmontools
     - stow
     - strace
     - sudo
     - tig
     - tmux
-    - tmux-top
+    # - tmux-top  # not in EPEL
     - tree
     - neovim
     - zsh

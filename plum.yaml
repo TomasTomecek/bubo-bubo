@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars:
+    target: plum
+  roles:
+    #   - { role: packages, become: true }
+  - dotfiles
+  - common
