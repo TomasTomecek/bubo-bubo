@@ -7,46 +7,38 @@
     accept_hostkey: yes
     update: yes
   ignore_errors: yes
-# TODO: use ansible instead of stow
+- name: create dirs for dotfiles
+  file:
+    dest: '{{ item }}'
+    state: directory
+  loop:
+  - ~/.config
+  - ~/.config/mc
+  - ~/.config/nvim
 - name: symlink dotfiles
-  command: stow tmux zsh vim git p-g-p alacritty
-  args:
-    chdir: ~/.dotfiles
+  file:
+    state: link
+    dest: '{{ item.dest }}'
+    src: '{{ item.src }}'
+  loop:
+  - { dest: ~/.alacritty.toml, src: ~/.dotfiles/alacritty/.alacritty.toml }
+  - { dest: ~/.gitconfig, src: ~/.dotfiles/git/.gitconfig }
+  - { dest: ~/.gitign, src: ~/.dotfiles/git/.gitign }
+  - { dest: ~/.git-template, src: ~/.dotfiles/git/.git-template }
+  - { dest: ~/.tmux.conf, src: ~/.dotfiles/tmux/.tmux.conf }
+  - { dest: ~/.tmux-top, src: ~/.dotfiles/tmux/.tmux-top }
+  - { dest: ~/.vimrc, src: ~/.dotfiles/vim/.vimrc }
+  - { dest: ~/.zshrc, src: ~/.dotfiles/zsh/.zshrc }
+  - { dest: ~/.zsh-theme, src: ~/.dotfiles/zsh/.zsh-theme }
+  - { dest: ~/.config/pretty-git-prompt.yml, src: ~/.dotfiles/p-g-p/.config/pretty-git-prompt.yml }
+  - { dest: ~/.config/mc/mc.keymap, src: ~/.dotfiles/mc/mc.keymap }
+  - { dest: ~/.config/mc/ini, src: ~/.dotfiles/mc/ini }
+  - { dest: ~/.config/mc/panels.ini, src: ~/.dotfiles/mc/panels.ini }
+  - { dest: ~/.config/nvim/init.lua, src: ~/.dotfiles/nvim/init.lua }
+  - { dest: ~/.config/nvim/lua, src: ~/.dotfiles/nvim/lua }
 - name: generate git commit template for hosts that differ from the dotfiles default
   template:
     src: git-template
     dest: ~/.dotfiles/git/.git-template
   when: git_template is defined
-- name: create dir for nvim
-  file:
-    dest: ~/.config/nvim/
-    state: directory
-- name: create dir for mc
-  file:
-    dest: ~/.config/mc/
-    state: directory
-- name: symlink mc configs
-  file:
-    state: link
-    dest: ~/.config/mc/{{ item }}
-    src: ~/.dotfiles/mc/{{ item }}
-  loop:
-    - mc.keymap
-    - ini
-    - panels.ini
-- name: create dirs for .vim and nvim
-  file:
-    dest: '{{ item }}'
-    state: directory
-  with_items:
-  - ~/.config/nvim
-- name: set up nvim
-  file:
-    state: link
-    dest: ~/.config/nvim/{{ item }}
-    src: ~/.dotfiles/nvim/{{ item }}
-  loop:
-  - init.lua
-  - lua
-  # FIXME: https://stackoverflow.com/questions/33672491/how-to-use-ansible-to-provision-vim-vundle-plugin
 # TODO: services role: open firewall 60001 port for mosh, change ssh port, disable root login
