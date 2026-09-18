@@ -24,7 +24,6 @@
   - { dest: ~/.alacritty.toml, src: ~/.dotfiles/alacritty/.alacritty.toml }
   - { dest: ~/.gitconfig, src: ~/.dotfiles/git/.gitconfig }
   - { dest: ~/.gitign, src: ~/.dotfiles/git/.gitign }
-  - { dest: ~/.git-template, src: ~/.dotfiles/git/.git-template }
   - { dest: ~/.tmux.conf, src: ~/.dotfiles/tmux/.tmux.conf }
   - { dest: ~/.tmux-top, src: ~/.dotfiles/tmux/.tmux-top }
   - { dest: ~/.vimrc, src: ~/.dotfiles/vim/.vimrc }
@@ -36,9 +35,28 @@
   - { dest: ~/.config/mc/panels.ini, src: ~/.dotfiles/mc/panels.ini }
   - { dest: ~/.config/nvim/init.lua, src: ~/.dotfiles/nvim/init.lua }
   - { dest: ~/.config/nvim/lua, src: ~/.dotfiles/nvim/lua }
+- name: symlink git commit template
+  file:
+    state: link
+    dest: ~/.git-template
+    src: ~/.dotfiles/git/.git-template
+  when: git_template is not defined
+- name: check if git commit template is a symlink
+  stat:
+    path: ~/.git-template
+  register: git_template_stat
+  when: git_template is defined
+- name: remove git commit template symlink
+  file:
+    path: ~/.git-template
+    state: absent
+  when:
+  - git_template is defined
+  - git_template_stat.stat.exists
+  - git_template_stat.stat.islnk
 - name: generate git commit template for hosts that differ from the dotfiles default
   template:
     src: git-template
-    dest: ~/.dotfiles/git/.git-template
+    dest: ~/.git-template
   when: git_template is defined
 # TODO: services role: open firewall 60001 port for mosh, change ssh port, disable root login
