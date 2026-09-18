@@ -2,6 +2,3 @@
 	path = roles/secret
 	url = ssh://git@192.168.1.30/tt/bubo-bubo-secret.git
 	branch = main
-[submodule "roles/weechat-role"]
-	path = roles/weechat-role
-	url = ssh://soy/~/gitkwak/weechat-role
