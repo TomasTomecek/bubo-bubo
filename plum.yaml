@@ -6,3 +6,4 @@
     #   - { role: packages, become: true }
   - dotfiles
   - common
+  - secret
