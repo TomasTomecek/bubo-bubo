@@ -1,0 +1,9 @@
+---
+# Users to install dotfiles for.
+# The regular user clones from GitHub; root clones from the regular user's
+# local checkout, so root needs no SSH keys of its own.
+# 'recursive: no' for root: the dotfiles repo has submodules pointing at
+# private remotes, and none of the symlinked files live in submodules.
+dotfiles_users:
+  - { name: '{{ ansible_user_id }}', home: '~',     become: false, repo: 'git@github.com:TomasTomecek/dotfiles', recursive: true }
+  - { name: 'root',                  home: '/root', become: true,  repo: '{{ ansible_env.HOME }}/.dotfiles',              recursive: false }

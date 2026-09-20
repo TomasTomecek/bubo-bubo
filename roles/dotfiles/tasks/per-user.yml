@@ -1,0 +1,75 @@
+---
+- name: clone repository with dotfiles for {{ dotfiles_user.name }}
+  git:
+    repo: '{{ dotfiles_user.repo }}'
+    dest: '{{ dotfiles_user.home }}/.dotfiles'
+    recursive: '{{ dotfiles_user.recursive }}'
+    accept_hostkey: yes
+    update: yes
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+  ignore_errors: yes
+- name: create dirs for dotfiles for {{ dotfiles_user.name }}
+  file:
+    dest: '{{ item }}'
+    state: directory
+  loop:
+  - '{{ dotfiles_user.home }}/.config'
+  - '{{ dotfiles_user.home }}/.config/mc'
+  - '{{ dotfiles_user.home }}/.config/nvim'
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+- name: symlink dotfiles for {{ dotfiles_user.name }}
+  file:
+    state: link
+    dest: '{{ item.dest }}'
+    src: '{{ item.src }}'
+  loop:
+  - { dest: '{{ dotfiles_user.home }}/.alacritty.toml', src: '{{ dotfiles_user.home }}/.dotfiles/alacritty/.alacritty.toml' }
+  - { dest: '{{ dotfiles_user.home }}/.gitconfig', src: '{{ dotfiles_user.home }}/.dotfiles/git/.gitconfig' }
+  - { dest: '{{ dotfiles_user.home }}/.gitign', src: '{{ dotfiles_user.home }}/.dotfiles/git/.gitign' }
+  - { dest: '{{ dotfiles_user.home }}/.tmux.conf', src: '{{ dotfiles_user.home }}/.dotfiles/tmux/.tmux.conf' }
+  - { dest: '{{ dotfiles_user.home }}/.tmux-top', src: '{{ dotfiles_user.home }}/.dotfiles/tmux/.tmux-top' }
+  - { dest: '{{ dotfiles_user.home }}/.vimrc', src: '{{ dotfiles_user.home }}/.dotfiles/vim/.vimrc' }
+  - { dest: '{{ dotfiles_user.home }}/.zshrc', src: '{{ dotfiles_user.home }}/.dotfiles/zsh/.zshrc' }
+  - { dest: '{{ dotfiles_user.home }}/.zsh-theme', src: '{{ dotfiles_user.home }}/.dotfiles/zsh/.zsh-theme' }
+  - { dest: '{{ dotfiles_user.home }}/.config/pretty-git-prompt.yml', src: '{{ dotfiles_user.home }}/.dotfiles/p-g-p/.config/pretty-git-prompt.yml' }
+  - { dest: '{{ dotfiles_user.home }}/.config/mc/mc.keymap', src: '{{ dotfiles_user.home }}/.dotfiles/mc/mc.keymap' }
+  - { dest: '{{ dotfiles_user.home }}/.config/mc/ini', src: '{{ dotfiles_user.home }}/.dotfiles/mc/ini' }
+  - { dest: '{{ dotfiles_user.home }}/.config/mc/panels.ini', src: '{{ dotfiles_user.home }}/.dotfiles/mc/panels.ini' }
+  - { dest: '{{ dotfiles_user.home }}/.config/nvim/init.lua', src: '{{ dotfiles_user.home }}/.dotfiles/nvim/init.lua' }
+  - { dest: '{{ dotfiles_user.home }}/.config/nvim/lua', src: '{{ dotfiles_user.home }}/.dotfiles/nvim/lua' }
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+- name: symlink git commit template for {{ dotfiles_user.name }}
+  file:
+    state: link
+    dest: '{{ dotfiles_user.home }}/.git-template'
+    src: '{{ dotfiles_user.home }}/.dotfiles/git/.git-template'
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+  when: git_template is not defined
+- name: check if git commit template is a symlink for {{ dotfiles_user.name }}
+  stat:
+    path: '{{ dotfiles_user.home }}/.git-template'
+  register: git_template_stat
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+  when: git_template is defined
+- name: remove git commit template symlink for {{ dotfiles_user.name }}
+  file:
+    path: '{{ dotfiles_user.home }}/.git-template'
+    state: absent
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+  when:
+  - git_template is defined
+  - git_template_stat.stat.exists
+  - git_template_stat.stat.islnk
+- name: generate git commit template for hosts that differ from the dotfiles default for {{ dotfiles_user.name }}
+  template:
+    src: git-template
+    dest: '{{ dotfiles_user.home }}/.git-template'
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+  when: git_template is defined
