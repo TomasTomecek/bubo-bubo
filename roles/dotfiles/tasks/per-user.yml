@@ -38,7 +38,12 @@
   - { dest: '{{ dotfiles_user.home }}/.config/mc/ini', src: '{{ dotfiles_user.home }}/.dotfiles/mc/ini' }
   - { dest: '{{ dotfiles_user.home }}/.config/mc/panels.ini', src: '{{ dotfiles_user.home }}/.dotfiles/mc/panels.ini' }
   - { dest: '{{ dotfiles_user.home }}/.config/nvim/init.lua', src: '{{ dotfiles_user.home }}/.dotfiles/nvim/init.lua' }
-  - { dest: '{{ dotfiles_user.home }}/.config/nvim/lua', src: '{{ dotfiles_user.home }}/.dotfiles/nvim/lua' }
+  become: '{{ dotfiles_user.become }}'
+  become_user: '{{ dotfiles_user.name }}'
+- name: remove stale kickstart.nvim lua symlink for {{ dotfiles_user.name }}
+  file:
+    path: '{{ dotfiles_user.home }}/.config/nvim/lua'
+    state: absent
   become: '{{ dotfiles_user.become }}'
   become_user: '{{ dotfiles_user.name }}'
 - name: symlink git commit template for {{ dotfiles_user.name }}
