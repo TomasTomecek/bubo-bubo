@@ -5,5 +5,5 @@
 # 'recursive: no' for root: the dotfiles repo has submodules pointing at
 # private remotes, and none of the symlinked files live in submodules.
 dotfiles_users:
-  - { name: '{{ ansible_user_id }}', home: '~',     become: false, repo: 'git@github.com:TomasTomecek/dotfiles', recursive: true }
-  - { name: 'root',                  home: '/root', become: true,  repo: '{{ ansible_env.HOME }}/.dotfiles',              recursive: false }
+  - { name: '{{ ansible_facts["user_id"] }}', home: '~',     become: false, repo: 'git@github.com:TomasTomecek/dotfiles', recursive: true }
+  - { name: 'root',                  home: '/root', become: true,  repo: '{{ ansible_facts["env"]["HOME"] }}/.dotfiles',  recursive: false }
