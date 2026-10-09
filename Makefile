@@ -6,9 +6,6 @@ A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vaul
 cacao:
 	$(A_P) ./cacao.yaml
 
-melon:
-	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./melon.yaml
-
 haskap:
 	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./haskap.yaml
 
@@ -17,9 +14,6 @@ plum:
 
 soy:
 	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
-
-jahoda:
-	$(A_P) --skip-tags "graphical,workstation" ./jahoda.yaml
 
 batatas:
 	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./batatas.yaml
