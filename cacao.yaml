@@ -10,8 +10,6 @@
   - dotfiles
   - common
   - ai
-#   tasks:
-#   - include_role:
-#       name: sync-configuration
-#     vars:
-#       make_target: cacao
+  tasks:
+  - include_role:
+      name: sync-configuration

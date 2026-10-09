@@ -17,6 +17,5 @@
   # - include_role:
   #     name: redhat-internal-ansible-role
   # ^ dropped: CSB now handles this
-  # - include_role:
-  #     name: sync-configuration
-  # ^ deferred to phase 2: hardcoded workdir path + systemd WantedBy bug
+  - include_role:
+      name: sync-configuration

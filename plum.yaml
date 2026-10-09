@@ -6,3 +6,6 @@
   - dotfiles
   - common
   - secret
+  tasks:
+  - include_role:
+      name: sync-configuration

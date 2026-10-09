@@ -1,5 +1,5 @@
 [Unit]
-Description=Run the playbook every day.
+Description=Run the bubo-bubo daily configuration sync
 
 [Timer]
 OnBootSec=1h

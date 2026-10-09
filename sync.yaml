@@ -1,0 +1,11 @@
+---
+# User-level daily sync: dotfiles only (no root, no sudo).
+# Run by the sync-configuration wrapper via `make sync`.
+- hosts: localhost
+  vars:
+    # Only the regular user (no root dotfiles) — this runs headless as the
+    # user, with no sudo.
+    dotfiles_users:
+      - { name: '{{ ansible_facts["user_id"] }}', home: '~', become: false, repo: 'git@github.com:TomasTomecek/dotfiles', recursive: true }
+  roles:
+  - dotfiles

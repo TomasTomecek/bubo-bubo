@@ -1,33 +1,48 @@
 ---
-- name: pull this repo; WTF, right?
-  git:
-    dest: '{{ playbook_dir }}'
-    repo: git@github.com:TomasTomecek/bubo-bubo
-    update: yes
-    track_submodules: yes
-    recursive: yes
-    accept_hostkey: yes
-  ignore_errors: yes
-- name: copy unit files
-  template:
+# Install the user-level sync-configuration service + timer.
+#
+# The service runs ~/.local/bin/sync-configuration.sh at user login and
+# daily (via the timer). The wrapper does the actual work:
+#   - skip the whole sync if the local git repo is dirty
+#   - git pull --ff-only origin master
+#   - git submodule sync + update
+#   - make sync (dotfiles, user-level, no root)
+#   - record the result to ~/.local/state/sync-configuration/last-run
+#
+# This role is user-level only (no root, no sudo). The root-side pieces
+# (weekly dnf upgrade + Prometheus exporter) are installed once per machine
+# by infra/scripts/sync-configuration-setup.sh.
+
+- name: install sync-configuration wrapper
+  ansible.builtin.template:
+    src: sync-configuration.sh
+    dest: ~/.local/bin/sync-configuration.sh
+    mode: "0755"
+
+- name: install sync-configuration user service
+  ansible.builtin.template:
     src: sync-configuration.service
-    dest: ~/.config/systemd/user/
-- name: copy timer unit
-  template:
+    dest: ~/.config/systemd/user/sync-configuration.service
+
+- name: install sync-configuration user timer
+  ansible.builtin.template:
     src: sync-configuration.timer
-    dest: ~/.config/systemd/user/
-# TODO: make 'user' configurable - this role should work with root
-- name: enable sync-configuration unit
-  systemd:
+    dest: ~/.config/systemd/user/sync-configuration.timer
+
+- name: reload user systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+    user: true
+
+- name: enable sync-configuration service (runs at user login)
+  ansible.builtin.systemd:
     name: sync-configuration.service
     enabled: true
-    state: reloaded
     user: true
-  ignore_errors: yes
-- name: enable timer unit
-  systemd:
+
+- name: start and enable sync-configuration timer
+  ansible.builtin.systemd:
     name: sync-configuration.timer
     enabled: true
-    user: true
     state: started
-  ignore_errors: yes
+    user: true

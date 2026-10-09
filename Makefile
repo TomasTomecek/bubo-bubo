@@ -7,16 +7,21 @@ cacao:
 	$(A_P) ./cacao.yaml
 
 haskap:
-	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./haskap.yaml
+	$(A_P) ./haskap.yaml
 
 plum:
-	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./plum.yaml
+	$(A_P) ./plum.yaml
 
 soy:
 	$(A_P) --skip-tags "graphical,workstation" ./soy.yaml
 
 batatas:
-	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 -K ./batatas.yaml
+	$(A_P) ./batatas.yaml
+
+# User-level daily sync (dotfiles only, no root, no vault). Run by the
+# sync-configuration wrapper; safe to run headless.
+sync:
+	ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 ./sync.yaml
 
 test:
 	docker run --rm -it -v ${PWD}:/src -w /src $(IMAGE_NAME) ./bootstrap.sh

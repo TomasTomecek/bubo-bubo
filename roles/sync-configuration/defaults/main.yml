@@ -1,1 +1,3 @@
-workdir: '{{ playbook_dir }}'
+---
+# Directory holding the bubo-bubo checkout on this machine.
+sync_configuration_workdir: "{{ playbook_dir }}"

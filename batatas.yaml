@@ -9,3 +9,6 @@
   - dotfiles
   - common
   - ai
+  tasks:
+  - include_role:
+      name: sync-configuration
