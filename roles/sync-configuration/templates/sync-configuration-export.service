@@ -1,0 +1,7 @@
+[Unit]
+Description=Export sync-configuration run status to node_exporter textfile
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sync-configuration-export.sh

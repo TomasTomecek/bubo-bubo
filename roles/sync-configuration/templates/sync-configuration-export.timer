@@ -1,0 +1,11 @@
+[Unit]
+Description=Periodic sync-configuration status export to node_exporter
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+AccuracySec=1min
+Unit=sync-configuration-export.service
+
+[Install]
+WantedBy=timers.target

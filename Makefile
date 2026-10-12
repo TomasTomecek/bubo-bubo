@@ -1,7 +1,9 @@
 .PHONY: test
 
 IMAGE_NAME := registry.fedoraproject.org/fedora:41
-A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vault-password-file roles/secret/files/ans-vault.txt
+# Full playbooks need root (packages/secret/common/root-dotfiles), so -K
+# prompts for the sudo password interactively. No passwordless sudo is used.
+A_P := ansible-playbook -v -e ansible_python_interpreter=/usr/bin/python3 --vault-password-file roles/secret/files/ans-vault.txt -K
 
 cacao:
 	$(A_P) ./cacao.yaml

@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly dnf package upgrade (Sunday {{ sync_configuration_dnf_time }})
+
+[Timer]
+OnCalendar=Sun *-*-* {{ sync_configuration_dnf_time }}:00
+Persistent=true
+Unit=sync-dnf-upgrade.service
+
+[Install]
+WantedBy=timers.target

@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     target: cacao
+    sync_configuration_dnf_time: "03:00"
   vars_files:
   - roles/secret/files/gruyere
   - roles/secret/files/bat

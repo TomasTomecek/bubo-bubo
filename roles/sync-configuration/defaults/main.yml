@@ -1,3 +1,6 @@
 ---
 # Directory holding the bubo-bubo checkout on this machine.
 sync_configuration_workdir: "{{ playbook_dir }}"
+# Time (HH:MM, 24h) for the weekly dnf upgrade, staggered per machine so
+# the boxes don't all hit the mirrors at once. Override per playbook.
+sync_configuration_dnf_time: "03:00"

@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     target: soy
+    sync_configuration_dnf_time: "02:00"
   vars_files:
   - roles/secret/files/gruyere
   roles:

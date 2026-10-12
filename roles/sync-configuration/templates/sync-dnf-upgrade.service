@@ -1,0 +1,6 @@
+[Unit]
+Description=Weekly dnf package upgrade
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/dnf -y upgrade

@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     target: plum
+    sync_configuration_dnf_time: "01:00"
   roles:
   - dotfiles
   - common

@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     target: haskap
+    sync_configuration_dnf_time: "05:00"
     git_template:
       signed_off_by: "Tomas Tomecek <ttomecek@redhat.com>"
       assisted_by: "Claude"

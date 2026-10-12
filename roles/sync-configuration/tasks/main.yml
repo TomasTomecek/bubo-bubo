@@ -1,17 +1,27 @@
 ---
-# Install the user-level sync-configuration service + timer.
+# Install the sync-configuration feature.
 #
-# The service runs ~/.local/bin/sync-configuration.sh at user login and
-# daily (via the timer). The wrapper does the actual work:
-#   - skip the whole sync if the local git repo is dirty
+# User-level (no root):
+#   - wrapper ~/.local/bin/sync-configuration.sh
+#   - user service (Type=oneshot, at login) + daily timer
+#
+# Root-level (become):
+#   - sync-dnf-upgrade.{service,timer}: weekly `dnf -y upgrade`, Sunday,
+#     at a staggered hour (sync_configuration_dnf_time)
+#   - sync-configuration-export.{service,timer} + /usr/local/bin/
+#     sync-configuration-export.sh + node_exporter textfile drop-in:
+#     export the last daily-sync status to Prometheus (only if
+#     node_exporter is installed)
+#   - enable linger so the user timer runs without a login
+#
+# The wrapper does the actual daily sync:
+#   - skip if the local git repo is dirty
 #   - git pull --ff-only origin master
 #   - git submodule sync + update
 #   - make sync (dotfiles, user-level, no root)
 #   - record the result to ~/.local/state/sync-configuration/last-run
-#
-# This role is user-level only (no root, no sudo). The root-side pieces
-# (weekly dnf upgrade + Prometheus exporter) are installed once per machine
-# by infra/scripts/sync-configuration-setup.sh.
+
+# --- User-level ---
 
 - name: install sync-configuration wrapper
   ansible.builtin.template:
@@ -29,10 +39,136 @@
     src: sync-configuration.timer
     dest: ~/.config/systemd/user/sync-configuration.timer
 
+# --- Root-level: weekly dnf upgrade ---
+
+- name: install sync-dnf-upgrade service
+  ansible.builtin.template:
+    src: sync-dnf-upgrade.service
+    dest: /etc/systemd/system/sync-dnf-upgrade.service
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: install sync-dnf-upgrade timer
+  ansible.builtin.template:
+    src: sync-dnf-upgrade.timer
+    dest: /etc/systemd/system/sync-dnf-upgrade.timer
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+# --- Root-level: Prometheus exporter (only if node_exporter is installed) ---
+
+- name: check for node_exporter
+  ansible.builtin.stat:
+    path: /usr/bin/prometheus-node-exporter
+  register: ne_stat
+
+- name: read node_exporter main unit ExecStart
+  ansible.builtin.command:
+    cmd: grep -m1 '^ExecStart=' /usr/lib/systemd/system/prometheus-node-exporter.service
+  register: ne_execstart
+  changed_when: false
+  when: ne_stat.stat.exists
+
+- name: determine if node_exporter textfile setup is needed
+  ansible.builtin.set_fact:
+    ne_setup: "{{ ne_stat.stat.exists and (ne_execstart.stdout | default('')) is search('prometheus-node-exporter') }}"
+
+- name: extract node_exporter ExecStart command
+  ansible.builtin.set_fact:
+    ne_execstart_cmd: "{{ ne_execstart.stdout | regex_replace('^ExecStart=', '') }}"
+  when: ne_setup
+
+- name: create textfile collector directory
+  ansible.builtin.file:
+    path: /var/lib/node_exporter/textfile_collector
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+  when: ne_setup
+
+- name: install sync-configuration exporter script
+  ansible.builtin.template:
+    src: sync-configuration-export.sh
+    dest: /usr/local/bin/sync-configuration-export.sh
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+  when: ne_setup
+
+- name: install sync-configuration-export service
+  ansible.builtin.template:
+    src: sync-configuration-export.service
+    dest: /etc/systemd/system/sync-configuration-export.service
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: ne_setup
+
+- name: install sync-configuration-export timer
+  ansible.builtin.template:
+    src: sync-configuration-export.timer
+    dest: /etc/systemd/system/sync-configuration-export.timer
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: ne_setup
+
+- name: install node_exporter textfile drop-in (canonical)
+  ansible.builtin.template:
+    src: node-exporter-textfile.conf
+    dest: /etc/systemd/system/prometheus-node-exporter.service.d/textfile.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: ne_setup
+  register: ne_dropin
+
+- name: remove legacy textfile drop-in (alias dir)
+  ansible.builtin.file:
+    path: /etc/systemd/system/node_exporter.service.d/textfile.conf
+    state: absent
+  become: true
+  when: ne_setup
+  register: ne_legacy
+
+# --- Root-level: linger ---
+
+- name: enable linger so the user timer runs without a login
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ ansible_user_id }}"
+  become: true
+  changed_when: false
+
+# --- Enable / start ---
+
 - name: reload user systemd
   ansible.builtin.systemd:
     daemon_reload: true
     user: true
+
+- name: reload system systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: restart node_exporter to pick up the textfile collector
+  ansible.builtin.systemd:
+    name: prometheus-node-exporter
+    state: restarted
+  become: true
+  when:
+    - ne_setup
+    - ne_dropin is changed or ne_legacy is changed
 
 - name: enable sync-configuration service (runs at user login)
   ansible.builtin.systemd:
@@ -46,3 +182,18 @@
     enabled: true
     state: started
     user: true
+
+- name: start and enable sync-dnf-upgrade timer
+  ansible.builtin.systemd:
+    name: sync-dnf-upgrade.timer
+    enabled: true
+    state: started
+  become: true
+
+- name: start and enable sync-configuration-export timer
+  ansible.builtin.systemd:
+    name: sync-configuration-export.timer
+    enabled: true
+    state: started
+  become: true
+  when: ne_setup
