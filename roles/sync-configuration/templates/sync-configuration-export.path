@@ -2,7 +2,7 @@
 Description=Export sync-configuration status when a run finishes
 
 [Path]
-PathChanged={{ ansible_facts['user_home'] }}/.local/state/sync-configuration/last-run
+PathChanged={{ ansible_facts['user_dir'] }}/.local/state/sync-configuration/last-run
 Unit=sync-configuration-export.service
 
 [Install]

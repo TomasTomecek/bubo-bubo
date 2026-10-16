@@ -7,7 +7,7 @@
 # by sync-configuration-export.path when last-run changes and by
 # sync-configuration-export.timer as a fallback.
 #
-# Reads from {{ ansible_facts['user_home'] }}/.local/state/sync-configuration/
+# Reads from {{ ansible_facts['user_dir'] }}/.local/state/sync-configuration/
 # (written by the user-level sync-configuration.service):
 #   last-run       "<epoch> <status>", status = success|skipped|failure
 #   last-run.env   key=value: duration, step, commit, recap_*
@@ -31,7 +31,7 @@
 #   sync_configuration_last_run_info{step,commit}  1; failing step and HEAD commit
 set -euo pipefail
 
-STATE_DIR="${SYNC_CONFIGURATION_STATE_DIR:-{{ ansible_facts['user_home'] }}/.local/state/sync-configuration}"
+STATE_DIR="${SYNC_CONFIGURATION_STATE_DIR:-{{ ansible_facts['user_dir'] }}/.local/state/sync-configuration}"
 OUT_DIR="${SYNC_CONFIGURATION_OUT_DIR:-/var/lib/node_exporter/textfile_collector}"
 OUT="$OUT_DIR/sync-configuration.prom"
 TMP="$OUT.tmp.$$"
