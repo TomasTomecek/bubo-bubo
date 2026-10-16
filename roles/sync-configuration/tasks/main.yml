@@ -20,8 +20,12 @@
 #   - git submodule sync + update
 #   - make sync (dotfiles, user-level, no root)
 #   - record the result to ~/.local/state/sync-configuration/last-run
+#
+# Note: user units are managed with `systemctl --user` commands, not the
+# systemd module — its `user` parameter only exists in ansible-core >= 2.21
+# and the target machines run 2.16-2.20.
 
-# --- User-level ---
+# --- User-level: install files ---
 
 - name: install sync-configuration wrapper
   ansible.builtin.template:
@@ -141,20 +145,41 @@
   when: ne_setup
   register: ne_legacy
 
-# --- Root-level: linger ---
+# --- Root-level: linger (before user unit management — systemctl --user
+#     needs the user manager running, and enable-linger starts it) ---
 
 - name: enable linger so the user timer runs without a login
   ansible.builtin.command:
-    cmd: "loginctl enable-linger {{ ansible_user_id }}"
+    cmd: "loginctl enable-linger {{ ansible_facts['user_id'] }}"
   become: true
   changed_when: false
 
-# --- Enable / start ---
+# --- Enable / start user units (systemctl --user; the playbook runs as the
+#     user, so no become) ---
 
 - name: reload user systemd
-  ansible.builtin.systemd:
-    daemon_reload: true
-    user: true
+  ansible.builtin.command:
+    cmd: systemctl --user daemon-reload
+  register: user_reload
+  changed_when: false
+  retries: 5
+  delay: 2
+  until: user_reload.rc == 0
+
+- name: enable sync-configuration service (runs at user login)
+  ansible.builtin.command:
+    cmd: systemctl --user enable sync-configuration.service
+  register: user_service_enable
+  # systemctl prints 'Created symlink' to stderr
+  changed_when: "'Created symlink' in (user_service_enable.stdout ~ user_service_enable.stderr)"
+
+- name: start and enable sync-configuration timer
+  ansible.builtin.command:
+    cmd: systemctl --user enable --now sync-configuration.timer
+  register: user_timer_enable
+  changed_when: "'Created symlink' in (user_timer_enable.stdout ~ user_timer_enable.stderr)"
+
+# --- Enable / start system units ---
 
 - name: reload system systemd
   ansible.builtin.systemd:
@@ -169,19 +194,6 @@
   when:
     - ne_setup
     - ne_dropin is changed or ne_legacy is changed
-
-- name: enable sync-configuration service (runs at user login)
-  ansible.builtin.systemd:
-    name: sync-configuration.service
-    enabled: true
-    user: true
-
-- name: start and enable sync-configuration timer
-  ansible.builtin.systemd:
-    name: sync-configuration.timer
-    enabled: true
-    state: started
-    user: true
 
 - name: start and enable sync-dnf-upgrade timer
   ansible.builtin.systemd:
