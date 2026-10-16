@@ -2,3 +2,7 @@
 	path = roles/secret
 	url = ssh://git@plum-forgejo/tt/bubo-bubo-secret.git
 	branch = main
+[submodule "roles/ai"]
+	path = roles/ai
+	url = ssh://git@plum-forgejo/tt/ai-role.git
+	branch = main
