@@ -6,6 +6,7 @@
   roles:
   - dotfiles
   - common
+  - node-exporter
   - secret
   tasks:
   - include_role:

@@ -1,0 +1,5 @@
+---
+# Address of the Prometheus server (plum) allowed to scrape node_exporter.
+node_exporter_prometheus_source: 192.168.1.30
+# TCP port node_exporter listens on (the package default is :9100).
+node_exporter_port: 9100

@@ -1,0 +1,78 @@
+---
+# Install and run Prometheus node_exporter so plum's Prometheus can scrape it.
+#
+# Fedora (and EPEL on EL10, e.g. plum) ships it as the `node-exporter` package, providing
+# /usr/bin/prometheus-node-exporter and prometheus-node-exporter.service
+# (node_exporter.service is an alias symlink). The unit reads its flags from
+# /etc/default/prometheus-node-exporter ($ARGS) and listens on :9100.
+#
+# The textfile collector is NOT configured here: the sync-configuration role
+# adds a systemd drop-in for it. Include this role BEFORE sync-configuration
+# so that role finds the binary in the same run.
+#
+# Firewall: 9100/tcp is opened only for node_exporter_prometheus_source via
+# a firewalld rich rule. firewall-cmd is used instead of ansible.posix.firewalld
+# because the repo does not use ansible.posix and the hosts only have
+# ansible-core. Skipped when firewalld is not running.
+
+- name: install node_exporter
+  ansible.builtin.dnf:
+    name: node-exporter
+    state: present
+  become: true
+
+- name: start and enable node_exporter
+  ansible.builtin.systemd:
+    name: prometheus-node-exporter
+    enabled: true
+    state: started
+  become: true
+
+- name: check if firewalld is running
+  ansible.builtin.command:
+    cmd: systemctl is-active --quiet firewalld
+  register: ne_firewalld
+  changed_when: false
+  failed_when: false
+
+- name: set node_exporter firewall rule
+  ansible.builtin.set_fact:
+    ne_fw_rule: >-
+      rule family="ipv4" source address="{{ node_exporter_prometheus_source }}"
+      port port="{{ node_exporter_port }}" protocol="tcp" accept
+
+- name: check for node_exporter rich rule in the permanent config
+  ansible.builtin.command:
+    cmd: firewall-cmd --permanent --query-rich-rule='{{ ne_fw_rule }}'
+  register: ne_fw_permanent
+  changed_when: false
+  failed_when: false
+  become: true
+  when: ne_firewalld.rc == 0
+
+- name: allow Prometheus to scrape node_exporter (permanent)
+  ansible.builtin.command:
+    cmd: firewall-cmd --permanent --add-rich-rule='{{ ne_fw_rule }}'
+  become: true
+  changed_when: true
+  when:
+    - ne_firewalld.rc == 0
+    - ne_fw_permanent.rc != 0
+
+- name: check for node_exporter rich rule in the runtime config
+  ansible.builtin.command:
+    cmd: firewall-cmd --query-rich-rule='{{ ne_fw_rule }}'
+  register: ne_fw_runtime
+  changed_when: false
+  failed_when: false
+  become: true
+  when: ne_firewalld.rc == 0
+
+- name: allow Prometheus to scrape node_exporter (runtime)
+  ansible.builtin.command:
+    cmd: firewall-cmd --add-rich-rule='{{ ne_fw_rule }}'
+  become: true
+  changed_when: true
+  when:
+    - ne_firewalld.rc == 0
+    - ne_fw_runtime.rc != 0

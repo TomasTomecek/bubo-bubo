@@ -11,6 +11,7 @@
   - dotfiles
   - common
   - ai
+  - node-exporter
   tasks:
   - include_role:
       name: sync-configuration

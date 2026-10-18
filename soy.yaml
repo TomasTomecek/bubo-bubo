@@ -10,6 +10,7 @@
   - secret
   - dotfiles
   - common
+  - node-exporter
   tasks:
   - include_role:
       name: sync-configuration

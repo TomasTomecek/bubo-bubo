@@ -13,6 +13,7 @@
                                          # redhat-internal-ansible-role used to configure
   - dotfiles
   - common
+  - node-exporter
   tasks:
   # desktop role deleted in phase 2 (XFCE-specific, unused on GNOME)
   # - include_role:
