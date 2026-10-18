@@ -8,10 +8,11 @@
 # Root-level (become):
 #   - sync-dnf-upgrade.{service,timer}: weekly `dnf -y upgrade`, Sunday,
 #     at a staggered hour (sync_configuration_dnf_time)
-#   - sync-configuration-export.{service,timer} + /usr/local/bin/
+#   - sync-configuration-export.{service,timer,path} + /usr/local/bin/
 #     sync-configuration-export.sh + node_exporter textfile drop-in:
 #     export the last daily-sync status to Prometheus (only if
-#     node_exporter is installed)
+#     node_exporter is installed); the path unit exports right after
+#     each run, the timer is a fallback
 #   - enable linger so the user timer runs without a login
 #
 # The wrapper does the actual daily sync:
@@ -19,7 +20,8 @@
 #   - git pull --ff-only origin master
 #   - git submodule sync + update
 #   - make sync (dotfiles, user-level, no root)
-#   - record the result to ~/.local/state/sync-configuration/last-run
+#   - record the result to ~/.local/state/sync-configuration/ (last-run
+#     plus last-run.env, last-run.log, last-success, counts)
 #
 # Note: user units are managed with `systemctl --user` commands, not the
 # systemd module — its `user` parameter only exists in ansible-core >= 2.21
@@ -131,6 +133,16 @@
   become: true
   when: ne_setup
 
+- name: install sync-configuration-export path
+  ansible.builtin.template:
+    src: sync-configuration-export.path
+    dest: /etc/systemd/system/sync-configuration-export.path
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: ne_setup
+
 - name: install node_exporter textfile drop-in (canonical)
   ansible.builtin.template:
     src: node-exporter-textfile.conf
@@ -210,6 +222,14 @@
 - name: start and enable sync-configuration-export timer
   ansible.builtin.systemd:
     name: sync-configuration-export.timer
+    enabled: true
+    state: started
+  become: true
+  when: ne_setup
+
+- name: start and enable sync-configuration-export path
+  ansible.builtin.systemd:
+    name: sync-configuration-export.path
     enabled: true
     state: started
   become: true
