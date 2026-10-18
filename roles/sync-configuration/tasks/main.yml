@@ -143,6 +143,11 @@
   become: true
   when: ne_setup
 
+- name: create /etc/systemd/system/prometheus-node-exporter.service.d
+  file:
+    dest: /etc/systemd/system/prometheus-node-exporter.service.d
+    state: directory
+
 - name: install node_exporter textfile drop-in (canonical)
   ansible.builtin.template:
     src: node-exporter-textfile.conf
