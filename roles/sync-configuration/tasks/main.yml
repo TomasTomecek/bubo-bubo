@@ -33,6 +33,11 @@
     dest: ~/.local/bin/sync-configuration.sh
     mode: "0755"
 
+- name: create ~/.config/systemd/user
+  file:
+    dest: ~/.config/systemd/user
+    state: directory
+
 - name: install sync-configuration user service
   ansible.builtin.template:
     src: sync-configuration.service
